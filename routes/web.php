@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/lang/{locale}', function (string $locale) {
+    if (!in_array($locale, ['en', 'ua'])) {
+        abort(404);
+    }
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+})->name('lang');
+
 Route::get('/', function () {
     return view('welcome');
 });
